@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Определяем конфигуратор свойств для внедрения значений -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:config.properties"/>
+    </bean>
+
+    <!-- Определяем бин библиотеки -->
+    <bean id="library" class="com.example.library.Library" />
+
+    <!-- Определяем бин пользователя библиотеки, передаем зависимость библиотеки -->
+    <bean id="libraryUser" class="com.example.library.LibraryUser">
+        <constructor-arg ref="library" />
+    </bean>
+
+    <!-- Определяем бины для книг с внедрением значений через сеттер -->
+    <bean id="book" class="com.example.library.Book">
+        <property name="title" value="${book.title}" />
+        <property name="author" value="${book.author}" />
+    </bean>
+
+</beans>
